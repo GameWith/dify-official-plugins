@@ -1,4 +1,17 @@
 settings:
+  - name: app_token
+    type: secret-input
+    required: true
+    label:
+      en_US: App Token (Socket Mode)
+      zh_Hans: App Token（Socket Mode）
+      pt_BR: App Token (Socket Mode)
+      ja_JP: App Token（Socket Mode）
+    placeholder:
+      en_US: Please input your App Token (starts with xapp-)
+      zh_Hans: 请输入你的 App Token（以 xapp- 开头）
+      pt_BR: Insira seu App Token (começa com xapp-)
+      ja_JP: App Token を入力してください（xapp- で始まります）
   - name: bot_token
     type: secret-input
     required: true
@@ -8,19 +21,10 @@ settings:
       pt_BR: Token do Bot
       ja_JP: Bot Token
     placeholder:
-      en_US: Please input your Bot Token
-      zh_Hans: 请输入你的 Bot Token
-      pt_BR: Por favor, insira seu Token do Bot
-      ja_JP: ボットトークンを入力してください
-  - name: allow_retry
-    type: boolean
-    required: false
-    label:
-      en_US: Allow Retry
-      zh_Hans: 允许重试
-      pt_BR: Permitir Retentativas
-      ja_JP: 再試行を許可
-    default: false
+      en_US: Please input your Bot Token (starts with xoxb-)
+      zh_Hans: 请输入你的 Bot Token（以 xoxb- 开头）
+      pt_BR: Insira seu Bot Token (começa com xoxb-)
+      ja_JP: Bot Token を入力してください（xoxb- で始まります）
   - name: app
     type: app-selector
     required: true
@@ -36,3 +40,4 @@ settings:
       ja_JP: あなたが Slack メッセージに回答するために使用するアプリ
 endpoints:
   - endpoints/slack.yaml
+  - endpoints/slack_invoke.yaml

@@ -1,7 +1,7 @@
 ## Slack Bot
 
 **Author:** Langgenius  
-**Version:** 0.0.4
+**Version:** 0.0.29
 **Type:** extension
 
 ### Description
@@ -17,19 +17,27 @@ Follow these steps to integrate the Slack plugin:
 
 2. **Configure App Settings**
 
-   - Enable Incoming Webhooks
+   - Enable **Socket Mode**
+   - Generate an **App-Level Token** with `connections:write` scope (starts with `xapp-`)
    - Install the app to your workspace
-   - Choose a channel for message delivery
-   - Locate your "Bot User OAuth Token" in settings
+   - Locate your **Bot User OAuth Token** (starts with `xoxb-`)
      <img src="./_assets/step3.png" width="600" />
      <img src="./_assets/step4.png" width="600" />
      <img src="./_assets/step5.png" width="600" />
 
-3. **Set Up Dify Endpoint**
+3. **Configure Event Subscriptions (No Request URL Needed)**
+
+   - Enable **Event Subscriptions**
+   - Add **Bot Events**:
+     - `app_mention`
+   - Add required OAuth scopes (at least):
+     - `app_mentions:read`
+     - `chat:write`
+
+4. **Set Up Dify Endpoint**
 
    - Create a new endpoint with a custom name
-   - Input your Bot User OAuth Token
-   - Set "Allow Retry" to false (recommended to prevent duplicate messages)
+   - Input your **App Token (xapp-)** and **Bot Token (xoxb-)**
    - Link to your Dify chatflow/chatbot/agent
    - Save and copy the generated endpoint URL
 
@@ -38,18 +46,12 @@ Follow these steps to integrate the Slack plugin:
       <img src="./_assets/step7.png" width="400" />
     </div>
 
-4. **Complete Slack App Configuration**
+5. **Start Socket Mode Connection**
 
-   - Enable Event Subscriptions
-   - Paste the Dify endpoint URL as the Request URL
-   - Add required OAuth scopes for Event Subscriptions
-   - Configure App's OAuth & Permissions with necessary scopes
-     <img src="./_assets/step8.png" width="600" />
-     <img src="./_assets/step9.png" width="600" />
+   - Open the Dify endpoint URL once (GET request) to bootstrap and start the Socket Mode connection.
+   - After the connection starts, you can interact by @mentioning the bot in Slack.
 
-     <img src="./_assets/step10.png" width="400" />
-
-5. **Final Steps**
+6. **Final Steps**
    - Reinstall the app to your workspace if you made changes
    - Add the bot to your chosen channel
    - Start interacting by @mentioning the bot in messages
