@@ -1177,19 +1177,20 @@ class SlackSocketModeManager:
 
         with self._lock:
             current = self._runners.get(config.endpoint_id)
-            # Even if config is unchanged, we may have updated internal invoke metadata
-            # (endpoint_url / headers) on the latest bootstrap call.
-            base_info = self._base_session.get(config.endpoint_id) or {}
-            desired_endpoint_url = base_info.get("endpoint_url")
-            desired_internal_headers = base_info.get("internal_headers") or {}
 
             if current and current.config == config:
-                same_endpoint_url = getattr(current, "_endpoint_url", None) == desired_endpoint_url  # noqa: SLF001
-                same_headers = getattr(current, "_internal_headers", {}) == desired_internal_headers  # noqa: SLF001
-                if same_endpoint_url and same_headers:
-                    self._push_log(config.endpoint_id, "runner: already running with same config")
+                connected = False
+                try:
+                    connected = current._socket_client.is_connected()  # noqa: SLF001
+                except Exception:
+                    connected = False
+
+                if connected:
+                    # Do not restart on bootstrap; metadata is fetched dynamically on each event.
+                    self._push_log(config.endpoint_id, "runner: already running (skip restart)")
                     return
-                self._push_log(config.endpoint_id, "runner: restarting (internal invoke metadata changed)")
+
+                self._push_log(config.endpoint_id, "runner: restarting (socket disconnected)")
                 current.stop()
 
             if current:
