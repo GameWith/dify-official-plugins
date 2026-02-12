@@ -1,6 +1,6 @@
-version: 0.0.5
+version: 0.0.29
 type: plugin
-author: langgenius
+author: hirokishigeta
 name: slack-bot
 label:
   en_US: Slack Bot
